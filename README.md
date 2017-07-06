@@ -1,5 +1,5 @@
 # iNet Process PHP FPM Docker Image
-Docker Hub: https://hub.docker.com/r/inetprocess/phing
+Docker Hub: https://hub.docker.com/r/edyan/phing
 
 Docker containers that contains [phing](https://www.phing.info/), a build tool for PHP Applications. It's made for development purposes.
 
