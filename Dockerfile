@@ -1,5 +1,5 @@
 FROM debian:jessie-slim
-MAINTAINER Emmanuel Dyan <emmanuel.dyan@inetprocess.com>
+MAINTAINER Emmanuel Dyan <emmanueldyan@gmail.com>
 
 # Upgrade the system and Install PHP
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -13,10 +13,10 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
     rm -Rf /var/lib/apt/lists/* /usr/share/man/* /usr/share/doc/*
 
 # Install composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-    php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-    php composer-setup.php --install-dir=/usr/local/bin/ --filename=composer && \
-    php -r "unlink('composer-setup.php');"
+RUN php -r "copy('https://getcomposer.org/download/1.5.1/composer.phar', '/usr/local/bin/composer');" && \
+    php -r "if (hash_file('SHA384', '/usr/local/bin/composer') === 'fd3800adeff12dde28e9238d2bb82ba6f887bc6d718eee3e3a5d4f70685a236b9e96afd01aeb0dbab8ae6211caeb1cbe') {echo 'Composer installed';} else {echo 'Hash invalid for downloaded composer.phar'; exit(1);}" && \
+    chmod 0755 /usr/local/bin/composer && \
+    /usr/local/bin/composer selfupdate --stable
 
 # Install phing and its dependencies with composer
 RUN mkdir -p /opt/composer
