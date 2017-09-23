@@ -2,8 +2,8 @@ FROM        alpine:3.6
 MAINTAINER  Emmanuel Dyan <emmanueldyan@gmail.com>
 
 # Prepare environment
-RUN     addgroup -g 1000 phing
-RUN     adduser -H -u 1000 -D -G phing phing
+RUN         addgroup -g 1000 phing
+RUN         adduser -g "Phing" -H -u 1000 -D -G phing phing
 
 
 # Install packages
@@ -31,8 +31,9 @@ RUN         /usr/bin/php5 -r "copy('https://getcomposer.org/download/1.5.1/compo
 RUN         mkdir -p /opt/composer
 WORKDIR     /opt/composer
 COPY        conf/composer.json /opt/composer/
-RUN         /usr/local/bin/composer --no-ansi --no-dev --no-progress update && \
-            /usr/local/bin/composer clear-cache 
+RUN         /usr/local/bin/composer --prefer-dist --no-ansi --no-dev --no-progress update && \
+            /usr/local/bin/composer clear-cache && \
+            rm -rf /root/.composer
 
 ENV         PATH       /opt/composer/vendor/bin:$PATH
 ENV         PHING_UID  100
