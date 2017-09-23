@@ -2,8 +2,8 @@ FROM        alpine:3.6
 MAINTAINER  Emmanuel Dyan <emmanueldyan@gmail.com>
 
 # Prepare environment
-RUN     addgroup phing
-RUN     adduser -D -G phing phing
+RUN     addgroup -g 1000 phing
+RUN     adduser -H -u 1000 -D -G phing phing
 
 
 # Install packages
@@ -11,7 +11,7 @@ RUN         apk update && \
 
             apk upgrade && \
 
-            apk add ca-certificates graphviz php5-cli php5-openssl php5-phar && \
+            apk add ca-certificates graphviz php5-cli php5-dom php5-json php5-openssl php5-phar && \
 
             rm -rf /var/cache/apk/*
 
@@ -31,7 +31,8 @@ RUN         /usr/bin/php5 -r "copy('https://getcomposer.org/download/1.5.1/compo
 RUN         mkdir -p /opt/composer
 WORKDIR     /opt/composer
 COPY        conf/composer.json /opt/composer/
-RUN         /usr/local/bin/composer --no-ansi --no-dev --no-progress update
+RUN         /usr/local/bin/composer --no-ansi --no-dev --no-progress update && \
+            /usr/local/bin/composer clear-cache 
 
 ENV         PATH       /opt/composer/vendor/bin:$PATH
 ENV         PHING_UID  100
