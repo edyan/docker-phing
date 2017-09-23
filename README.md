@@ -3,8 +3,9 @@ Docker Hub: https://hub.docker.com/r/edyan/phing
 
 Docker containers that contains [phing](https://www.phing.info/), a build tool for PHP Applications. It's made for development purposes.
 
-To use it in an integrated environment, try our [Docker LAMP stack](https://github.com/edyan/docker-lamp)
+To use it in an integrated environment, try [Stakkr](https://github.com/edyan/stakkr)
 
+That image is built with alpine (❤ ... Mb instead of 96Mb with debian-slim).
 
 # Run your phing command
 ## From outside

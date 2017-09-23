@@ -1,4 +1,3 @@
-#!/bin/bash
-usermod -u $FPM_UID www-data
-groupmod -g $FPM_GID www-data
-chown www-data:www-data /var/log/php
+#!/bin/sh
+sed -i "s/:100:101:phing:/:$PHING_UID:$PHING_GID:phing:/g" /etc/passwd
+sed -i "s/:101:phing/:$PHING_GID:phing/g" /etc/group

@@ -1,33 +1,46 @@
-FROM debian:jessie-slim
-MAINTAINER Emmanuel Dyan <emmanueldyan@gmail.com>
+FROM        alpine:3.6
+MAINTAINER  Emmanuel Dyan <emmanueldyan@gmail.com>
 
-# Upgrade the system and Install PHP
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+# Prepare environment
+RUN     addgroup phing
+RUN     adduser -D -G phing phing
 
-    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
 
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates graphviz php5-cli && \
+# Install packages
+RUN         apk update && \
 
-    DEBIAN_FRONTEND=noninteractive apt-get autoremove -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get clean && \
-    rm -Rf /var/lib/apt/lists/* /usr/share/man/* /usr/share/doc/*
+            apk upgrade && \
+
+            apk add ca-certificates graphviz php5-cli php5-openssl php5-phar && \
+
+            rm -rf /var/cache/apk/*
+
+
+# Make PHP Available as "php"
+RUN         ln -s /usr/bin/php5 /usr/bin/php
+
 
 # Install composer
-RUN php -r "copy('https://getcomposer.org/download/1.5.1/composer.phar', '/usr/local/bin/composer');" && \
-    php -r "if (hash_file('SHA384', '/usr/local/bin/composer') === 'fd3800adeff12dde28e9238d2bb82ba6f887bc6d718eee3e3a5d4f70685a236b9e96afd01aeb0dbab8ae6211caeb1cbe') {echo 'Composer installed';} else {echo 'Hash invalid for downloaded composer.phar'; exit(1);}" && \
-    chmod 0755 /usr/local/bin/composer && \
-    /usr/local/bin/composer selfupdate --stable
+RUN         /usr/bin/php5 -r "copy('https://getcomposer.org/download/1.5.1/composer.phar', '/usr/local/bin/composer');" && \
+            /usr/bin/php5 -r "if (hash_file('SHA384', '/usr/local/bin/composer') === 'fd3800adeff12dde28e9238d2bb82ba6f887bc6d718eee3e3a5d4f70685a236b9e96afd01aeb0dbab8ae6211caeb1cbe') {echo 'Composer installed';} else {echo 'Hash invalid for downloaded composer.phar'; exit(1);}" && \
+            chmod 0755 /usr/local/bin/composer && \
+            /usr/local/bin/composer selfupdate --stable
+
 
 # Install phing and its dependencies with composer
-RUN mkdir -p /opt/composer
-COPY conf/composer.json /opt/composer/
-RUN cd /opt/composer && \
-    composer --no-ansi update --no-dev --no-progress
-ENV PATH /opt/composer/vendor/bin:$PATH
+RUN         mkdir -p /opt/composer
+WORKDIR     /opt/composer
+COPY        conf/composer.json /opt/composer/
+RUN         /usr/local/bin/composer --no-ansi --no-dev --no-progress update
 
-# run the basic chown commands
-COPY run.sh     /run.sh
-RUN  chmod +x    /run.sh
+ENV         PATH       /opt/composer/vendor/bin:$PATH
+ENV         PHING_UID  100
+ENV         PHING_GID  101
 
 
-CMD ["/run.sh"]
+# Copy and define the run.sh as the main command
+COPY        run.sh     /run.sh
+RUN         chmod +x    /run.sh
+
+USER        phing
+CMD         ["/run.sh"]
