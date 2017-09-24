@@ -1,14 +1,23 @@
 {
     "require": {
         "phing/phing": "^2",
-        "phpdocumentor/phpdocumentor": "^2",
-        "sebastian/phpcpd": "^2",
-        "phpmd/phpmd": "^2",
-        "pdepend/pdepend": "^2",
-        "phploc/phploc": "^4",
-        "phpunit/phpunit": "^5",
-        "tedivm/jshrink": "^1",
-        "pear/archive_tar": "^1",
-        "squizlabs/php_codesniffer": "^2"
+        "ext-pdo_sqlite": "*",
+        "pear/archive_tar": "1.4.x",
+        "pear/http_request2": "dev-trunk",
+        "pear/net_growl": "dev-trunk",
+        "pear/pear-core-minimal": "1.10.1",
+        "pear/versioncontrol_git": "@dev",
+        "pear/versioncontrol_svn": "~0.5",
+        "pdepend/pdepend": "2.x",
+        "phpdocumentor/phpdocumentor": "2.x",
+        "phploc/phploc": "~2.0.6",
+        "phpmd/phpmd": "~2.2",
+        "phpunit/phpunit": ">=3.7",
+        "siad007/versioncontrol_hg": "^1.0",
+        "sebastian/phpcpd": "2.x",
+        "sebastian/git": "~1.0",
+        "squizlabs/php_codesniffer": "~2.2",
+        "mikey179/vfsStream": "^1.6",
+        "simpletest/simpletest": "^1.1"
     }
 }
