@@ -11,7 +11,8 @@ RUN         apk update && \
 
             apk upgrade && \
 
-            apk add ca-certificates graphviz php5-cli php5-dom php5-json php5-openssl php5-phar && \
+            apk add ca-certificates graphviz \
+                    php5-cli php5-ctype php5-dom php5-json php5-openssl php5-phar php5-xml && \
 
             rm -rf /var/cache/apk/*
 
