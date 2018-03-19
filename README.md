@@ -10,7 +10,7 @@ That image is built with alpine (❤ ... ~30Mb instead of ~100Mb with debian-sli
 # Run your phing command
 ## From outside
 ```bash
-docker run -it --rm --volume $(pwd):$(pwd) edyan/phing -f $(pwd)/build.xml
+docker run -it --rm --volume $(pwd):$(pwd) edyan/phing phing -f $(pwd)/build.xml
 ```
 
 
