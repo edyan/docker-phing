@@ -1,0 +1,11 @@
+#!/bin/sh
+CURRENT_PHING_ID=$(id -u phing)
+if [ "$CURRENT_PHING_ID" != "$PHING_UID" ]; then
+    echo "Fixing user details of 'phing'..."
+    groupmod -g $PHING_GID phing
+    usermod  -u $PHING_UID -g $PHING_GID phing
+    echo "...Fixed"
+fi
+
+CMD="/usr/bin/php /opt/composer/vendor/bin/phing $@"
+su -l phing -s /bin/sh -c "${CMD}"

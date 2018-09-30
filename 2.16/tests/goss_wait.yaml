@@ -1,0 +1,6 @@
+command:
+  /usr/bin/phing -v:
+    exit-status: 0
+    stdout:
+    - Phing 2.16.1
+    stderr: []

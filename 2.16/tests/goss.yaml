@@ -1,0 +1,58 @@
+package:
+  php5-cli:
+    installed: true
+    versions:
+    - 5.6.37-r0
+user:
+  phing:
+    exists: true
+    uid: 512
+    gid: 1024
+    groups:
+    - phing
+    home: /opt/composer
+    shell: /bin/ash
+group:
+  phing:
+    exists: true
+    gid: 1024
+command:
+  su - phing -c '/opt/composer/vendor/bin/phing':
+    exit-status: 1
+    stderr:
+    - 'Buildfile: build.xml does not exist!'
+  su - phing -c '/opt/composer/vendor/bin/phpcbf --no-patch /opt/composer/test.php':
+    exit-status: 1
+    stdout:
+    - Changing into directory /opt/composer
+    - Processing test.php
+    - PHP => 61 tokens in 17 lines
+    stderr:
+    - 'PHP Warning:  file_put_contents(/opt/composer/test.php): failed to open stream'
+  su - phing -c '/opt/composer/vendor/bin/phpcpd /opt/composer/test.php':
+    exit-status: 0
+    stdout:
+    - phpcpd 2.0.4 by Sebastian Bergmann.
+    - 0.00% duplicated lines out of 17 total lines of code.
+    stderr: []
+  su - phing -c '/opt/composer/vendor/bin/phpcs /opt/composer/test.php':
+    exit-status: 1
+    stdout:
+    - 'FILE: /opt/composer/test.php'
+    - FOUND 9 ERRORS AND 1 WARNING AFFECTING 4 LINES
+    stderr: []
+  su - phing -c '/opt/composer/vendor/bin/phpdoc -f /opt/composer/test.php':
+    exit-status: 0
+    stdout:
+    - Collecting files .. OK
+    - Initializing parser .. OK
+    stderr: []
+  su - phing -c '/opt/composer/vendor/bin/phploc /opt/composer/test.php':
+    exit-status: 0
+    stdout:
+    - Lines of Code (LOC)                               17
+    stderr: []
+  su - phing -c '/opt/composer/vendor/bin/phpmd /opt/composer/test.php text codesize':
+    exit-status: 0
+    stdout: []
+    stderr: []
