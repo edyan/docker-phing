@@ -1,5 +1,5 @@
 ## Phing docker image
-[![Build Status](https://travis-ci.org/edyan/docker-phing.svg?branch=master)](https://travis-ci.org/edyan/docker-phing)
+[![Build Status](https://travis-ci.com/edyan/docker-phing.svg?branch=master)](https://travis-ci.com/edyan/docker-phing)
 [![Docker Pulls](https://img.shields.io/docker/pulls/edyan/phing.svg)](https://hub.docker.com/r/edyan/phing/)
 
 
